@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 export default function Home() {
     const [productos, setProductos] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     useEffect(() => {
         const fetchProductos = async () => {
@@ -84,8 +85,6 @@ export default function Home() {
 
     return (
         <>
-
-
             <header className="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-slate-800 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex h-16 items-center justify-between">
@@ -95,23 +94,48 @@ export default function Home() {
                             </div>
                             <h1 className="text-xl font-black tracking-tight text-slate-900 dark:text-white uppercase italic">Nyro Clothes</h1>
                         </a>
+                        
+                        {/* Desktop Nav */}
                         <nav className="hidden md:flex items-center gap-8">
                             <a className="text-sm font-medium hover:text-primary transition-colors" href="/productos">Productos</a>
                             <a className="text-sm font-medium hover:text-primary transition-colors" href="/ayuda">Ayuda</a>
                         </nav>
-                        <div className="flex items-center gap-4">
-                            <a href="https://oopbuy.com/register?inviteCode=5QZ5ABZLY" target="_blank" rel="noopener noreferrer" className="hidden sm:flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-primary/90 transition-all">
+                        
+                        {/* Mobile Menu Button */}
+                        <button 
+                            className="md:hidden text-slate-900 dark:text-white"
+                            onClick={() => setIsMenuOpen(!isMenuOpen)}
+                        >
+                            <span className="material-symbols-outlined text-3xl">
+                                {isMenuOpen ? 'close' : 'menu'}
+                            </span>
+                        </button>
+
+                        <div className="hidden md:flex items-center gap-4">
+                            <a href="https://oopbuy.com/register?inviteCode=5QZ5ABZLY" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-primary/90 transition-all">
                                 🎁 400€ GRATIS EN OOPBUY
                             </a>
                         </div>
                     </div>
                 </div>
 
-
+                {/* Mobile Menu Overlay */}
+                {isMenuOpen && (
+                    <div className="md:hidden bg-background-light dark:bg-background-dark border-b border-slate-200 dark:border-slate-800 animate-in fade-in slide-in-from-top-4 duration-300">
+                        <div className="px-4 py-6 space-y-4 flex flex-col items-center">
+                            <a className="text-lg font-bold hover:text-primary transition-colors uppercase tracking-widest" href="/productos" onClick={() => setIsMenuOpen(false)}>Productos</a>
+                            <a className="text-lg font-bold hover:text-primary transition-colors uppercase tracking-widest" href="/ayuda" onClick={() => setIsMenuOpen(false)}>Ayuda</a>
+                            <a href="https://oopbuy.com/register?inviteCode=5QZ5ABZLY" target="_blank" rel="noopener noreferrer" className="w-full text-center bg-primary text-white px-4 py-4 rounded-xl text-sm font-black uppercase tracking-widest" onClick={() => setIsMenuOpen(false)}>
+                                🎁 400€ GRATIS EN OOPBUY
+                            </a>
+                        </div>
+                    </div>
+                )}
             </header>
+
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
-                <section className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center py-12 lg:py-24">
+                <section className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center py-4 md:py-12 lg:py-24">
                     <div className="space-y-6 flex flex-col items-start text-left">
                         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider">
                             <span className="material-symbols-outlined text-xs">verified</span>
@@ -123,24 +147,24 @@ export default function Home() {
                                 EL LUGAR #1 EN PRODUCTOS DE <span className="text-primary">CALIDAD</span>
                             </h2>
                         </div>
-                        <div className="flex gap-4 pt-4">
-                            <a href="/productos" className="bg-primary text-white px-8 py-4 rounded-xl font-bold text-lg hover:shadow-lg hover:shadow-primary/20 transition-all">Explorar Catálogo</a>
-                            <a href="https://oopbuy.com/register?inviteCode=5QZ5ABZLY" target="_blank" rel="noopener noreferrer" className="bg-slate-800 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-slate-700 transition-all border border-slate-700">
+                        <div className="flex flex-col sm:flex-row gap-4 pt-4 w-full sm:w-auto">
+                            <a href="/productos" className="bg-primary text-white px-8 py-4 rounded-xl font-bold text-lg hover:shadow-lg hover:shadow-primary/20 transition-all text-center">Explorar Catálogo</a>
+                            <a href="https://oopbuy.com/register?inviteCode=5QZ5ABZLY" target="_blank" rel="noopener noreferrer" className="bg-slate-800 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-slate-700 transition-all border border-slate-700 text-center">
                                 Cupón 400€ OOPBUY
                             </a>
                         </div>
                     </div>
 
-                    <div className="hidden md:flex gap-4 h-[600px] overflow-hidden relative fade-y">
+                    <div className="flex gap-4 h-[400px] md:h-[600px] overflow-hidden relative fade-y">
                         <div className="absolute inset-0 z-10 pointer-events-none bg-gradient-to-b from-background-light dark:from-background-dark via-transparent to-background-light dark:to-background-dark"></div>
 
                         {/* Column 1 - Scroll Up */}
                         <div className="flex flex-col gap-4 animate-scroll-up">
                             {productos.slice(0, 10).concat(productos.slice(0, 10)).map((prod, idx) => (
-                                <div key={`c1-${idx}`} className="w-[150px] bg-white dark:bg-slate-900 rounded-xl overflow-hidden shadow-sm border border-slate-200 dark:border-slate-800 flex-shrink-0">
+                                <div key={`c1-${idx}`} className="w-[110px] md:w-[150px] bg-white dark:bg-slate-900 rounded-xl overflow-hidden shadow-sm border border-slate-200 dark:border-slate-800 flex-shrink-0">
                                     <div className="aspect-square bg-slate-100 dark:bg-slate-800" style={{ backgroundImage: `url('${prod.imagen.includes('geilicdn.com') ? 'https://images.weserv.nl/?url=' + prod.imagen : prod.imagen}')`, backgroundSize: "cover" }}></div>
                                     <div className="p-2">
-                                        <p className="text-[10px] font-bold truncate">{prod.nombre} {prod.producto}</p>
+                                        <p className="text-[8px] md:text-[10px] font-bold truncate">{prod.nombre} {prod.producto}</p>
                                     </div>
                                 </div>
                             ))}
@@ -149,10 +173,10 @@ export default function Home() {
                         {/* Column 2 - Scroll Down */}
                         <div className="flex flex-col gap-4 animate-scroll-down">
                             {productos.slice(10, 20).concat(productos.slice(10, 20)).map((prod, idx) => (
-                                <div key={`c2-${idx}`} className="w-[150px] bg-white dark:bg-slate-900 rounded-xl overflow-hidden shadow-sm border border-slate-200 dark:border-slate-800 flex-shrink-0">
+                                <div key={`c2-${idx}`} className="w-[110px] md:w-[150px] bg-white dark:bg-slate-900 rounded-xl overflow-hidden shadow-sm border border-slate-200 dark:border-slate-800 flex-shrink-0">
                                     <div className="aspect-square bg-slate-100 dark:bg-slate-800" style={{ backgroundImage: `url('${prod.imagen.includes('geilicdn.com') ? 'https://images.weserv.nl/?url=' + prod.imagen : prod.imagen}')`, backgroundSize: "cover" }}></div>
                                     <div className="p-2">
-                                        <p className="text-[10px] font-bold truncate">{prod.nombre} {prod.producto}</p>
+                                        <p className="text-[8px] md:text-[10px] font-bold truncate">{prod.nombre} {prod.producto}</p>
                                     </div>
                                 </div>
                             ))}
@@ -161,10 +185,10 @@ export default function Home() {
                         {/* Column 3 - Scroll Up Slow */}
                         <div className="flex flex-col gap-4 animate-scroll-up-slow mt-8">
                             {productos.slice(20, 30).concat(productos.slice(20, 30)).map((prod, idx) => (
-                                <div key={`c3-${idx}`} className="w-[150px] bg-white dark:bg-slate-900 rounded-xl overflow-hidden shadow-sm border border-slate-200 dark:border-slate-800 flex-shrink-0">
+                                <div key={`c3-${idx}`} className="w-[110px] md:w-[150px] bg-white dark:bg-slate-900 rounded-xl overflow-hidden shadow-sm border border-slate-200 dark:border-slate-800 flex-shrink-0">
                                     <div className="aspect-square bg-slate-100 dark:bg-slate-800" style={{ backgroundImage: `url('${prod.imagen.includes('geilicdn.com') ? 'https://images.weserv.nl/?url=' + prod.imagen : prod.imagen}')`, backgroundSize: "cover" }}></div>
                                     <div className="p-2">
-                                        <p className="text-[10px] font-bold truncate">{prod.nombre} {prod.producto}</p>
+                                        <p className="text-[8px] md:text-[10px] font-bold truncate">{prod.nombre} {prod.producto}</p>
                                     </div>
                                 </div>
                             ))}

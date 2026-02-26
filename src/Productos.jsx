@@ -14,6 +14,7 @@ export default function Productos() {
     const [categorias, setCategorias] = useState([]);
     const [loading, setLoading] = useState(true);
     const [activeCategory, setActiveCategory] = useState(initialCategory || 'Todos');
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const [searchTerm, setSearchTerm] = useState('');
 
@@ -80,48 +81,67 @@ export default function Productos() {
 
     return (
         <div className="min-h-screen bg-slate-50 dark:bg-background-dark text-slate-900 dark:text-white font-sans selection:bg-primary/20 selection:text-primary pb-20">
-            {/* Header duplicate from Home */}
+            {/* Header */}
             <header className="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-slate-800 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex h-16 items-center justify-between">
                         <div className="flex items-center gap-4">
-                            <button onClick={() => navigate('/')} className="flex items-center gap-2 text-slate-500 hover:text-primary transition-colors font-bold text-sm">
-                                <span className="material-symbols-outlined text-sm">arrow_back</span>
-                                Volver
-                            </button>
-                            <div className="h-6 w-px bg-slate-200 dark:bg-slate-700"></div>
                             <a href="/" className="flex items-center gap-2 group cursor-pointer">
                                 <div className="text-primary group-hover:scale-110 transition-transform">
                                     <span className="material-symbols-outlined text-3xl">bolt</span>
                                 </div>
-                                <h1 className="text-xl font-black tracking-tight text-slate-900 dark:text-white uppercase italic hidden sm:block">Nyro Clothes</h1>
+                                <h1 className="text-xl font-black tracking-tight text-slate-900 dark:text-white uppercase italic">Nyro Clothes</h1>
                             </a>
                         </div>
+                        
+                        {/* Desktop Nav */}
                         <nav className="hidden md:flex items-center gap-8">
                             <a className="text-sm font-medium text-primary transition-colors" href="/productos">Productos</a>
                             <a className="text-sm font-medium hover:text-primary transition-colors" href="/ayuda">Ayuda</a>
                         </nav>
-                        <div className="flex items-center gap-4">
-                            <a href="https://oopbuy.com/register?inviteCode=5QZ5ABZLY" target="_blank" rel="noopener noreferrer" className="hidden sm:flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-primary/90 transition-all">
+
+                        {/* Mobile Menu Button */}
+                        <button 
+                            className="md:hidden text-slate-900 dark:text-white"
+                            onClick={() => setIsMenuOpen(!isMenuOpen)}
+                        >
+                            <span className="material-symbols-outlined text-3xl">
+                                {isMenuOpen ? 'close' : 'menu'}
+                            </span>
+                        </button>
+
+                        <div className="hidden md:flex items-center gap-4">
+                            <a href="https://oopbuy.com/register?inviteCode=5QZ5ABZLY" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-primary/90 transition-all">
                                 🎁 400€ GRATIS EN OOPBUY
                             </a>
                         </div>
                     </div>
                 </div>
 
-
+                {/* Mobile Menu Overlay */}
+                {isMenuOpen && (
+                    <div className="md:hidden bg-background-light dark:bg-background-dark border-b border-slate-200 dark:border-slate-800 animate-in fade-in slide-in-from-top-4 duration-300">
+                        <div className="px-4 py-6 space-y-4 flex flex-col items-center">
+                            <a className="text-lg font-bold hover:text-primary transition-colors uppercase tracking-widest text-primary" href="/productos" onClick={() => setIsMenuOpen(false)}>Productos</a>
+                            <a className="text-lg font-bold hover:text-primary transition-colors uppercase tracking-widest" href="/ayuda" onClick={() => setIsMenuOpen(false)}>Ayuda</a>
+                            <a href="https://oopbuy.com/register?inviteCode=5QZ5ABZLY" target="_blank" rel="noopener noreferrer" className="w-full text-center bg-primary text-white px-4 py-4 rounded-xl text-sm font-black uppercase tracking-widest" onClick={() => setIsMenuOpen(false)}>
+                                🎁 400€ GRATIS EN OOPBUY
+                            </a>
+                        </div>
+                    </div>
+                )}
             </header>
 
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
                 <div className="mb-8">
-                    <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tight italic">TODOS LOS PRODUCTOS</h1>
+                    <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tight italic text-center md:text-left">TODOS LOS PRODUCTOS</h1>
                 </div>
 
                 {/* Horizontal Filter Bar */}
                 <section className="mb-10 lg:mb-16 space-y-6">
                     {/* Search Bar */}
-                    <div className="relative max-w-md">
+                    <div className="relative max-w-md mx-auto md:mx-0">
                         <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">search</span>
                         <input
                             type="text"
@@ -133,7 +153,7 @@ export default function Productos() {
                     </div>
 
                     {/* Categories Wrap */}
-                    <div className="flex flex-wrap gap-2 pb-4">
+                    <div className="flex flex-wrap gap-2 pb-4 justify-center md:justify-start">
                         {categorias.map((cat, idx) => {
                             const isActive = activeCategory === cat;
                             return (
@@ -180,7 +200,6 @@ export default function Productos() {
                                     </div>
                                     <div className="flex flex-col gap-2 mt-2">
                                         <a href={prod.link} target="_blank" rel="noopener noreferrer" className="block text-center w-full bg-primary text-white hover:bg-primary/90 transition-all py-3 rounded-xl text-sm font-black uppercase tracking-widest shadow-lg shadow-primary/20">VER EN OOPBUY</a>
-                                        <a href="/product" className="block text-center w-full bg-transparent border-2 border-primary text-primary hover:bg-primary hover:text-white transition-all py-3 rounded-xl text-sm font-black uppercase tracking-widest">CONTROL CALIDAD</a>
                                     </div>
                                 </div>
                             ))

@@ -2,17 +2,56 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 export default function ProductDetail() {
+    const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+
     return (
         <div className="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display min-h-screen">
             <header className="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-slate-800 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex h-16 items-center justify-between">
-                        <Link to="/" className="flex items-center gap-2">
-                            <span className="material-symbols-outlined text-3xl text-primary">arrow_back</span>
-                            <span className="text-sm font-black uppercase">Volver al catálogo</span>
-                        </Link>
+                        <a href="/" className="flex items-center gap-2 group cursor-pointer">
+                            <div className="text-primary group-hover:scale-110 transition-transform">
+                                <span className="material-symbols-outlined text-3xl">bolt</span>
+                            </div>
+                            <h1 className="text-xl font-black tracking-tight text-slate-900 dark:text-white uppercase italic">Nyro Clothes</h1>
+                        </a>
+
+                        {/* Desktop Nav */}
+                        <nav className="hidden md:flex items-center gap-8">
+                            <a className="text-sm font-medium hover:text-primary transition-colors" href="/productos">Productos</a>
+                            <a className="text-sm font-medium hover:text-primary transition-colors" href="/ayuda">Ayuda</a>
+                        </nav>
+
+                        {/* Mobile Menu Button */}
+                        <button 
+                            className="md:hidden text-slate-900 dark:text-white"
+                            onClick={() => setIsMenuOpen(!isMenuOpen)}
+                        >
+                            <span className="material-symbols-outlined text-3xl">
+                                {isMenuOpen ? 'close' : 'menu'}
+                            </span>
+                        </button>
+
+                        <div className="hidden md:flex items-center gap-4">
+                            <a href="https://oopbuy.com/register?inviteCode=5QZ5ABZLY" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-primary/90 transition-all">
+                                🎁 400€ GRATIS EN OOPBUY
+                            </a>
+                        </div>
                     </div>
                 </div>
+
+                {/* Mobile Menu Overlay */}
+                {isMenuOpen && (
+                    <div className="md:hidden bg-background-light dark:bg-background-dark border-b border-slate-200 dark:border-slate-800 animate-in fade-in slide-in-from-top-4 duration-300">
+                        <div className="px-4 py-6 space-y-4 flex flex-col items-center">
+                            <a className="text-lg font-bold hover:text-primary transition-colors uppercase tracking-widest" href="/productos" onClick={() => setIsMenuOpen(false)}>Productos</a>
+                            <a className="text-lg font-bold hover:text-primary transition-colors uppercase tracking-widest" href="/ayuda" onClick={() => setIsMenuOpen(false)}>Ayuda</a>
+                            <a href="https://oopbuy.com/register?inviteCode=5QZ5ABZLY" target="_blank" rel="noopener noreferrer" className="w-full text-center bg-primary text-white px-4 py-4 rounded-xl text-sm font-black uppercase tracking-widest" onClick={() => setIsMenuOpen(false)}>
+                                🎁 400€ GRATIS EN OOPBUY
+                            </a>
+                        </div>
+                    </div>
+                )}
             </header>
 
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
