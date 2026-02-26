@@ -131,9 +131,6 @@ export default function Home() {
                         <div className="px-4 py-6 space-y-4 flex flex-col items-center">
                             <a className="text-lg font-bold hover:text-primary transition-colors uppercase tracking-widest" href="/productos" onClick={() => setIsMenuOpen(false)}>Productos</a>
                             <a className="text-lg font-bold hover:text-primary transition-colors uppercase tracking-widest" href="/ayuda" onClick={() => setIsMenuOpen(false)}>Ayuda</a>
-                            <a href="https://oopbuy.com/register?inviteCode=5QZ5ABZLY" target="_blank" rel="noopener noreferrer" className="w-full text-center bg-primary text-white px-4 py-4 rounded-xl text-sm font-black uppercase tracking-widest" onClick={() => setIsMenuOpen(false)}>
-                                🎁 400€ GRATIS EN OOPBUY
-                            </a>
                         </div>
                     </div>
                 )}
