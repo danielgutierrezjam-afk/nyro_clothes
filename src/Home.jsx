@@ -102,15 +102,20 @@ export default function Home() {
                             <a className="text-sm font-medium hover:text-primary transition-colors" href="/ayuda">Ayuda</a>
                         </nav>
                         
-                        {/* Mobile Menu Button */}
-                        <button 
-                            className="md:hidden text-slate-900 dark:text-white"
-                            onClick={() => setIsMenuOpen(!isMenuOpen)}
-                        >
-                            <span className="material-symbols-outlined text-3xl">
-                                {isMenuOpen ? 'close' : 'menu'}
-                            </span>
-                        </button>
+                        {/* Mobile Menu Button + Promo */}
+                        <div className="flex items-center gap-2 md:hidden">
+                            <a href="https://oopbuy.com/register?inviteCode=5QZ5ABZLY" target="_blank" rel="noopener noreferrer" className="bg-primary text-white px-2 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-tight shadow-sm">
+                                🎁 400€ GRATIS
+                            </a>
+                            <button 
+                                className="text-slate-900 dark:text-white flex items-center"
+                                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                            >
+                                <span className="material-symbols-outlined text-3xl">
+                                    {isMenuOpen ? 'close' : 'menu'}
+                                </span>
+                            </button>
+                        </div>
 
                         <div className="hidden md:flex items-center gap-4">
                             <a href="https://oopbuy.com/register?inviteCode=5QZ5ABZLY" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-primary/90 transition-all">
