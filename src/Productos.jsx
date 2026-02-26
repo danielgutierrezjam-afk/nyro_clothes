@@ -17,6 +17,7 @@ export default function Productos() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const [searchTerm, setSearchTerm] = useState('');
+    const [isCategoriesExpanded, setIsCategoriesExpanded] = useState(false);
 
     useEffect(() => {
         const fetchProductos = async () => {
@@ -78,6 +79,11 @@ export default function Productos() {
         const matchesSearch = p.nombre.toLowerCase().includes(searchTerm.toLowerCase());
         return matchesCategory && matchesSearch;
     });
+
+    const handleCategoryClick = (cat) => {
+        setActiveCategory(cat);
+        setIsCategoriesExpanded(false);
+    };
 
     return (
         <div className="min-h-screen bg-slate-50 dark:bg-background-dark text-slate-900 dark:text-white font-sans selection:bg-primary/20 selection:text-primary pb-20">
@@ -152,8 +158,41 @@ export default function Productos() {
                         />
                     </div>
 
-                    {/* Categories Wrap */}
-                    <div className="flex flex-wrap gap-2 pb-4 justify-center md:justify-start">
+                    {/* Categories Accordion for Mobile */}
+                    <div className="md:hidden">
+                        <button
+                            onClick={() => setIsCategoriesExpanded(!isCategoriesExpanded)}
+                            className="w-full flex items-center justify-between bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-800 rounded-2xl px-6 py-3 font-black uppercase tracking-widest text-sm hover:border-primary transition-colors"
+                        >
+                            <span>FILTRAR POR CATEGORÍA {activeCategory !== 'Todos' && <span className="text-primary">: {activeCategory}</span>}</span>
+                            <span className={`material-symbols-outlined transition-transform duration-300 ${isCategoriesExpanded ? 'rotate-180' : ''}`}>
+                                expand_more
+                            </span>
+                        </button>
+                        
+                        {isCategoriesExpanded && (
+                            <div className="mt-2 p-4 bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-800 rounded-2xl flex flex-wrap gap-2 animate-in fade-in slide-in-from-top-2 duration-300">
+                                {categorias.map((cat, idx) => {
+                                    const isActive = activeCategory === cat;
+                                    return (
+                                        <button
+                                            key={idx}
+                                            onClick={() => handleCategoryClick(cat)}
+                                            className={`px-4 py-2 rounded-full font-bold text-[10px] uppercase tracking-wider transition-all border-2 ${isActive
+                                                ? 'bg-primary text-white border-primary shadow-lg shadow-primary/20'
+                                                : 'bg-transparent text-slate-500 border-slate-200 dark:border-slate-800 hover:border-primary hover:text-primary'
+                                                }`}
+                                        >
+                                            {cat}
+                                        </button>
+                                    );
+                                })}
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Categories Desktop Grid */}
+                    <div className="hidden md:flex flex-wrap gap-2 pb-4 justify-start">
                         {categorias.map((cat, idx) => {
                             const isActive = activeCategory === cat;
                             return (

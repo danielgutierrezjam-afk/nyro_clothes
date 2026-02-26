@@ -92,6 +92,7 @@ export default function Home() {
                             <div className="text-primary group-hover:scale-110 transition-transform">
                                 <span className="material-symbols-outlined text-3xl">bolt</span>
                             </div>
+                            {/* Brand text always visible */}
                             <h1 className="text-xl font-black tracking-tight text-slate-900 dark:text-white uppercase italic">Nyro Clothes</h1>
                         </a>
                         
@@ -206,14 +207,14 @@ export default function Home() {
                         </a>
                     </div>
 
-                    <div className="flex w-max animate-scroll-left hover:[animation-play-state:paused] gap-4 py-4">
+                    <div className="flex w-max animate-scroll-left hover:[animation-play-state:paused] gap-4 py-4" style={{ willChange: "transform" }}>
                         {loading && categoriasArray.length === 0 ? (
                             <div className="w-screen flex justify-center items-center py-20 uppercase font-black italic text-slate-700">
                                 Cargando categorías...
                             </div>
                         ) : (
                             [...categoriasArray, ...categoriasArray].map((cat, idx) => (
-                                <a key={`cat-${idx}`} href={`/productos?categoria=${encodeURIComponent(cat.nombre)}`} className="w-[260px] h-[320px] bg-[#0d1117] rounded-xl overflow-hidden relative flex-shrink-0 group cursor-pointer border border-slate-800 hover:border-primary transition-all duration-300">
+                                <a key={`cat-${idx}`} href={`/productos?categoria=${encodeURIComponent(cat.nombre)}`} className="w-[200px] md:w-[260px] h-[260px] md:h-[320px] bg-[#0d1117] rounded-xl overflow-hidden relative flex-shrink-0 group cursor-pointer border border-slate-800 hover:border-primary transition-all duration-300">
                                     <div className="p-5 flex flex-col relative z-10 text-left">
                                         <h3 className="text-white font-black uppercase text-xl leading-tight mb-1">{cat.nombre}</h3>
                                         <p className="text-primary font-bold text-sm tracking-wide">{cat.count} productos</p>
@@ -222,7 +223,8 @@ export default function Home() {
                                         <img
                                             src={cat.imagen}
                                             alt={cat.nombre}
-                                            className="w-full h-full object-cover object-bottom group-hover:scale-110 transition-transform duration-700"
+                                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                                            style={{ objectPosition: "bottom" }}
                                         />
                                     </div>
                                     <div className="absolute inset-0 bg-gradient-to-t from-[#0d1117] via-transparent to-transparent opacity-60"></div>
